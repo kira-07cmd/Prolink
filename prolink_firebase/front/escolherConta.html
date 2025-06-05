@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escolha seu tipo de conta - Prolink</title>
+    <link rel="shortcut icon" href="../imagenselogos/logo 00_03_43-Photoroom.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0d0d0d;
+            color: white;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #8E2DE2, #4A00E0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: fadeInDown 1s ease;
+            text-align: center;
+        }
+
+        .card-container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeIn 1s ease 0.3s both;
+        }
+
+        .card {
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 16px;
+            width: 280px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.03);
+            border: 2px solid #8E2DE2;
+            box-shadow: 0 8px 20px rgba(142, 45, 226, 0.3);
+        }
+
+        .card h2 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .card p {
+            color: #ccc;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid transparent;
+            border-top-color: #8E2DE2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+                padding: 0 20px;
+            }
+
+            .card-container {
+                gap: 20px;
+                padding: 0 20px;
+            }
+
+            .card {
+                width: 100%;
+                max-width: 320px;
+            }
+        }
+
+        .card {
+            position: relative;
+        }
+
+        .change-type {
+            margin-top: 15px;
+            text-align: center;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .change-type a {
+            color: #8E2DE2;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .change-type a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Fundo com partículas -->
+    <div id="particles-js"></div>
+
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="content">
+        <h1>Como você deseja usar o Prolink?</h1>
+
+        <div class="card-container">
+            <div class="card" onclick="escolherTipoConta('pessoal')">
+                <h2>Conta Pessoal 👤</h2>
+                <p>Descubra oportunidades, conecte-se com empresas e mostre seu talento ao mundo.</p>
+            </div>
+
+            <div class="card" onclick="escolherTipoConta('empresarial')">
+                <h2>Conta Empresarial 🏢</h2>
+                <p>Encontre talentos, divulgue vagas e fortaleça a imagem da sua marca.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#8E2DE2" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.3 },
+                "size": { "value": 3 },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#4A00E0",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": { "enable": true, "speed": 2 }
+            },
+            "interactivity": {
+                "events": {
+                    "onhover": { "enable": true, "mode": "repulse" }
+                }
+            }
+        });
+    </script>
+
+    <!-- Firebase -->
+    <script type="module">
+        import { auth, db } from '../back/firebase.js';
+        import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+        // Verificar se o usuário já tem tipo de conta
+        window.onload = async () => {
+            try {
+                const user = auth.currentUser;
+
+                if (!user) {
+                    // Aguardar um pouco para ver se o usuário é carregado
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    const newUser = auth.currentUser;
+
+                    if (!newUser) {
+                        console.log("Usuário não autenticado");
+                        window.location.href = "teladelogin.html";
+                        return;
+                    }
+                }
+
+                const userDoc = await getDoc(doc(db, "usuarios", user.uid));
+
+                if (userDoc.exists() && userDoc.data().tipoConta) {
+                    console.log("Usuário já tem tipo de conta:", userDoc.data().tipoConta);
+                    window.location.href = "feed.html";
+                }
+            } catch (error) {
+                console.error("Erro ao verificar tipo de conta:", error);
+            }
+        };
+
+        // Função para escolher tipo de conta
+        window.escolherTipoConta = async (tipo) => {
+            const loadingOverlay = document.getElementById("loadingOverlay");
+            loadingOverlay.style.display = "flex";
+
+            try {
+                const user = auth.currentUser;
+
+                if (!user) {
+                    console.error("Usuário não autenticado");
+                    window.location.href = "teladelogin.html";
+                    return;
+                }
+
+                console.log("Salvando tipo de conta:", tipo);
+
+                // Salvar no localStorage
+                localStorage.setItem("tipoConta", tipo);
+
+                // Salvar no Firestore
+                const userRef = doc(db, "usuarios", user.uid);
+                await updateDoc(userRef, {
+                    tipoConta: tipo,
+                    dataAtualizacao: new Date()
+                });
+
+                console.log("Tipo de conta salvo com sucesso!");
+                window.location.href = "completarPerfil.html";
+            } catch (error) {
+                console.error("Erro ao salvar tipo de conta:", error);
+                alert("Erro ao salvar tipo de conta. Por favor, tente novamente.");
+                loadingOverlay.style.display = "none";
+            }
+        };
+
+        // Listener para mudanças no estado de autenticação
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                console.log("Usuário deslogado, redirecionando para login");
+                window.location.href = "teladelogin.html";
+            }
+        });
+    </script>
+</body>
+
+</html>

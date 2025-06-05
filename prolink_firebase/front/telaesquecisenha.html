@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recuperar Senha - Prolink</title>
+    <link rel="shortcut icon" href="../imagenselogos/logo 00_03_43-Photoroom.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: #0F0F0F;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            color: white;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .logo {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 2;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo span {
+            font-size: 1.4rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #8E2DE2, #4A00E0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .container {
+            background-color: rgba(26, 26, 26, 0.9);
+            padding: 2rem;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 0 30px rgba(142, 45, 226, 0.4);
+            animation: fadeIn 1s ease-in-out;
+            z-index: 1;
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+            background: linear-gradient(90deg, #8E2DE2, #4A00E0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .info-text {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #888;
+            line-height: 1.4;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            background-color: #2A2A2A;
+            color: white;
+            font-size: 1rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 1rem;
+            background: linear-gradient(90deg, #8E2DE2, #4A00E0);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .links a {
+            color: #8E2DE2;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        .msg {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Fundo com partículas -->
+    <div id="particles-js"></div>
+
+    <!-- LOGO -->
+    <div class="logo">
+        <img src="../imagenselogos/logo 00_03_43-Photoroom.png" alt="Logo Prolink">
+        <span>Prolink</span>
+    </div>
+
+    <!-- CONTEÚDO -->
+    <div class="container">
+        <h1>Recuperar Senha</h1>
+        <p class="info-text">
+            Digite seu email cadastrado para receber<br>instruções de recuperação de senha.
+        </p>
+        <form onsubmit="event.preventDefault(); recuperarSenha();">
+            <input type="email" id="email" placeholder="E-mail" required />
+            <button type="submit">Enviar Email</button>
+        </form>
+        <div class="msg" id="mensagem"></div>
+        <div class="links">
+            <a href="teladelogin.html">Voltar para o login</a>
+        </div>
+    </div>
+
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#8E2DE2" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.3 },
+                "size": { "value": 3 },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#4A00E0",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": { "enable": true, "speed": 2 }
+            },
+            "interactivity": {
+                "events": {
+                    "onhover": { "enable": true, "mode": "repulse" }
+                }
+            }
+        });
+    </script>
+
+    <!-- Firebase -->
+    <script type="module">
+        import { auth } from '../back/firebase.js';
+        import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+        const msg = document.getElementById("mensagem");
+
+        window.recuperarSenha = async () => {
+            const email = document.getElementById("email").value.toLowerCase();
+            const submitButton = document.querySelector('button[type="submit"]');
+
+            if (!email) {
+                msg.style.color = "#f55";
+                msg.textContent = "⚠️ Por favor, digite seu email.";
+                return;
+            }
+
+            submitButton.disabled = true;
+            submitButton.textContent = "Enviando...";
+            msg.textContent = "";
+
+            try {
+                await sendPasswordResetEmail(auth, email);
+                msg.style.color = "#4caf50";
+                msg.innerHTML = `
+                    ✓ Email de recuperação enviado!<br>
+                    <small style="color: #888; display: block; margin-top: 8px;">
+                        Verifique sua caixa de entrada e pasta de spam.<br>
+                        O link expira em 1 hora.
+                    </small>
+                `;
+                submitButton.textContent = "Email Enviado";
+            } catch (error) {
+                msg.style.color = "#f55";
+                console.error("Erro ao enviar email de recuperação:", error);
+
+                switch (error.code) {
+                    case 'auth/invalid-email':
+                        msg.textContent = "⚠️ O formato do email não é válido.";
+                        break;
+                    case 'auth/user-not-found':
+                        msg.textContent = "⚠️ Não existe conta com este email.";
+                        break;
+                    case 'auth/too-many-requests':
+                        msg.innerHTML = `
+                            ⚠️ Muitas tentativas. Tente novamente mais tarde.<br>
+                            <small style="color: #888; display: block; margin-top: 8px;">
+                                Por segurança, aguarde alguns minutos.
+                            </small>
+                        `;
+                        break;
+                    default:
+                        msg.textContent = "⚠️ " + error.message;
+                }
+
+                submitButton.textContent = "Enviar Email";
+                submitButton.disabled = false;
+            }
+        };
+    </script>
+</body>
+
+</html>

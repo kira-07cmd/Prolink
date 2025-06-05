@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Você - Prolink</title>
+    <link rel="shortcut icon" href="../imagenselogos/logo 00_03_43-Photoroom.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0d0d0d;
+            color: white;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: #8E2DE2;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            scrollbar-width: none;
+        }
+
+        .filter-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-tab {
+            padding: 8px 20px;
+            background: rgba(142, 45, 226, 0.1);
+            border: 1px solid rgba(142, 45, 226, 0.2);
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .filter-tab.active {
+            background: #8E2DE2;
+            border-color: #8E2DE2;
+        }
+
+        .filter-tab:hover {
+            background: rgba(142, 45, 226, 0.2);
+        }
+
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .recommendation-card {
+            background: rgba(26, 26, 26, 0.95);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(142, 45, 226, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .recommendation-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-tag {
+            display: inline-block;
+            padding: 5px 10px;
+            background: rgba(142, 45, 226, 0.1);
+            color: #8E2DE2;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .card-company {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .company-logo {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+
+        .company-name {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .card-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .card-detail {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .primary-btn {
+            background: #8E2DE2;
+            color: white;
+        }
+
+        .primary-btn:hover {
+            background: #4A00E0;
+        }
+
+        .secondary-btn {
+            background: rgba(142, 45, 226, 0.1);
+            color: #8E2DE2;
+        }
+
+        .secondary-btn:hover {
+            background: rgba(142, 45, 226, 0.2);
+        }
+
+        .load-more {
+            display: block;
+            width: 200px;
+            margin: 40px auto;
+            padding: 15px;
+            background: transparent;
+            border: 2px solid #8E2DE2;
+            color: #8E2DE2;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .load-more:hover {
+            background: #8E2DE2;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .recommendations-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Include Navbar -->
+    <div id="navbar-placeholder"></div>
+
+    <div class="container">
+        <div class="section-header">
+            <h1 class="section-title">
+                <i class="fas fa-compass"></i>
+                Para Você
+            </h1>
+        </div>
+
+        <!-- Filtros -->
+        <div class="filter-tabs">
+            <button class="filter-tab active">Todos</button>
+            <button class="filter-tab">Vagas</button>
+            <button class="filter-tab">Estágios</button>
+            <button class="filter-tab">Freelance</button>
+            <button class="filter-tab">Cursos</button>
+            <button class="filter-tab">Eventos</button>
+            <button class="filter-tab">Networking</button>
+        </div>
+
+        <!-- Grid de Recomendações -->
+        <div class="recommendations-grid">
+            <!-- As recomendações serão inseridas aqui dinamicamente -->
+        </div>
+
+        <!-- Botão Carregar Mais -->
+        <button class="load-more">
+            Carregar mais
+        </button>
+    </div>
+
+    <script type="module">
+        import { auth, db } from '../back/firebase.js';
+
+        // Carregar a navbar
+        fetch('components/navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-placeholder').innerHTML = data;
+            });
+
+        // Dados mockados para exemplo
+        const mockRecommendations = [
+            {
+                type: 'vaga',
+                title: 'Desenvolvedor Frontend React',
+                company: 'Tech Corp',
+                companyLogo: '../imagenselogos/default-profile.png',
+                image: '../imagenselogos/default-profile.png',
+                location: 'São Paulo, SP',
+                salary: 'R$ 8.000 - R$ 12.000',
+                workMode: 'Híbrido',
+                match: '95%'
+            },
+            {
+                type: 'estagio',
+                title: 'Estágio em UX/UI Design',
+                company: 'Design Studio',
+                companyLogo: '../imagenselogos/default-profile.png',
+                image: '../imagenselogos/default-profile.png',
+                location: 'Remoto',
+                salary: 'R$ 2.000',
+                workMode: 'Remoto',
+                match: '88%'
+            },
+            {
+                type: 'freelance',
+                title: 'Desenvolvimento de Landing Page',
+                company: 'Startup XYZ',
+                companyLogo: '../imagenselogos/default-profile.png',
+                image: '../imagenselogos/default-profile.png',
+                budget: 'R$ 3.000',
+                duration: '2 semanas',
+                match: '92%'
+            },
+            {
+                type: 'curso',
+                title: 'React Native do Zero ao Avançado',
+                company: 'Dev Academy',
+                companyLogo: '../imagenselogos/default-profile.png',
+                image: '../imagenselogos/default-profile.png',
+                duration: '40 horas',
+                price: 'R$ 497',
+                match: '97%'
+            }
+        ];
+
+        // Renderizar recomendações
+        function renderRecommendations() {
+            const grid = document.querySelector('.recommendations-grid');
+
+            mockRecommendations.forEach(rec => {
+                const card = document.createElement('div');
+                card.className = 'recommendation-card';
+
+                let details = '';
+                let actions = '';
+
+                switch (rec.type) {
+                    case 'vaga':
+                    case 'estagio':
+                        details = `
+                            <div class="card-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                ${rec.location}
+                            </div>
+                            <div class="card-detail">
+                                <i class="fas fa-money-bill-wave"></i>
+                                ${rec.salary}
+                            </div>
+                            <div class="card-detail">
+                                <i class="fas fa-building"></i>
+                                ${rec.workMode}
+                            </div>
+                        `;
+                        actions = `
+                            <button class="action-btn primary-btn">
+                                <i class="fas fa-paper-plane"></i>
+                                Candidatar-se
+                            </button>
+                            <button class="action-btn secondary-btn">
+                                <i class="far fa-bookmark"></i>
+                                Salvar
+                            </button>
+                        `;
+                        break;
+                    case 'freelance':
+                        details = `
+                            <div class="card-detail">
+                                <i class="fas fa-money-bill-wave"></i>
+                                ${rec.budget}
+                            </div>
+                            <div class="card-detail">
+                                <i class="fas fa-clock"></i>
+                                ${rec.duration}
+                            </div>
+                        `;
+                        actions = `
+                            <button class="action-btn primary-btn">
+                                <i class="fas fa-handshake"></i>
+                                Proposta
+                            </button>
+                            <button class="action-btn secondary-btn">
+                                <i class="far fa-bookmark"></i>
+                                Salvar
+                            </button>
+                        `;
+                        break;
+                    case 'curso':
+                        details = `
+                            <div class="card-detail">
+                                <i class="fas fa-clock"></i>
+                                ${rec.duration}
+                            </div>
+                            <div class="card-detail">
+                                <i class="fas fa-tag"></i>
+                                ${rec.price}
+                            </div>
+                        `;
+                        actions = `
+                            <button class="action-btn primary-btn">
+                                <i class="fas fa-graduation-cap"></i>
+                                Matricular
+                            </button>
+                            <button class="action-btn secondary-btn">
+                                <i class="far fa-bookmark"></i>
+                                Salvar
+                            </button>
+                        `;
+                        break;
+                }
+
+                card.innerHTML = `
+                    <img src="${rec.image}" alt="${rec.title}" class="card-image">
+                    <div class="card-content">
+                        <span class="card-tag">Match ${rec.match}</span>
+                        <h3 class="card-title">${rec.title}</h3>
+                        <div class="card-company">
+                            <img src="${rec.companyLogo}" alt="${rec.company}" class="company-logo">
+                            <span class="company-name">${rec.company}</span>
+                        </div>
+                        <div class="card-details">
+                            ${details}
+                        </div>
+                        <div class="card-actions">
+                            ${actions}
+                        </div>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        // Gerenciar filtros
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelector('.filter-tab.active').classList.remove('active');
+                tab.classList.add('active');
+                // Aqui você pode implementar a lógica de filtro real
+            });
+        });
+
+        // Inicializar a página
+        document.addEventListener('DOMContentLoaded', renderRecommendations);
+    </script>
+</body>
+
+</html>

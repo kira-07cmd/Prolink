@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed - Prolink</title>
+    <link rel="shortcut icon" href="../imagenselogos/logo 00_03_43-Photoroom.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0d0d0d;
+            color: white;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        /* Stories Section */
+        .stories-section {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .stories-container {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding: 10px 0;
+            scrollbar-width: none;
+        }
+
+        .stories-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .story-item {
+            min-width: 110px;
+            text-align: center;
+        }
+
+        .story-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 8px;
+            padding: 3px;
+            background: linear-gradient(45deg, #8E2DE2, #4A00E0);
+            cursor: pointer;
+        }
+
+        .story-circle img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid #0d0d0d;
+            object-fit: cover;
+        }
+
+        .story-username {
+            font-size: 0.8rem;
+            color: #fff;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Feed Layout */
+        .feed-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Posts Section */
+        .posts-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .post-card {
+            background: rgba(26, 26, 26, 0.95);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(142, 45, 226, 0.1);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            gap: 10px;
+        }
+
+        .post-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .post-info {
+            flex: 1;
+        }
+
+        .post-author {
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .post-meta {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .post-content {
+            padding: 0 15px 15px;
+        }
+
+        .post-text {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .post-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 20px;
+            padding: 10px 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #888;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .action-btn:hover {
+            color: #8E2DE2;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-section {
+            background: rgba(26, 26, 26, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(142, 45, 226, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .suggestion-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .suggestion-item:hover {
+            transform: translateX(5px);
+        }
+
+        .suggestion-item img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .suggestion-info {
+            flex: 1;
+        }
+
+        .suggestion-name {
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .suggestion-meta {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .follow-btn {
+            background: transparent;
+            border: 1px solid #8E2DE2;
+            color: #8E2DE2;
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .follow-btn:hover {
+            background: #8E2DE2;
+            color: white;
+        }
+
+        @media (max-width: 1024px) {
+            .feed-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .stories-section,
+            .feed-container {
+                padding: 0 10px;
+            }
+
+            .post-card {
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Include Navbar -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- Stories Section -->
+    <section class="stories-section">
+        <div class="stories-container">
+            <div class="story-item">
+                <div class="story-circle">
+                    <img src="../imagenselogos/default-profile.png" alt="Seu story">
+                </div>
+                <div class="story-username">Seu story</div>
+            </div>
+            <!-- Stories dinâmicos serão inseridos aqui -->
+        </div>
+    </section>
+
+    <!-- Main Feed Container -->
+    <div class="feed-container">
+        <!-- Posts Section -->
+        <section class="posts-section">
+            <!-- Posts dinâmicos serão inseridos aqui -->
+        </section>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Sugestões de Conexões -->
+            <div class="sidebar-section">
+                <h3 class="section-title">Sugestões para Você</h3>
+                <!-- Sugestões dinâmicas serão inseridas aqui -->
+            </div>
+
+            <!-- Vagas em Alta -->
+            <div class="sidebar-section">
+                <h3 class="section-title">Vagas em Alta</h3>
+                <!-- Vagas dinâmicas serão inseridas aqui -->
+            </div>
+        </aside>
+    </div>
+
+    <script type="module">
+        import { auth, db } from '../back/firebase.js';
+        import { collection, query, orderBy, limit, getDocs, where } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+        // Carregar a navbar
+        fetch('components/navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-placeholder').innerHTML = data;
+            });
+
+        // Dados mockados para exemplo
+        const mockStories = [
+            { id: 1, username: 'Tech Corp', image: '../imagenselogos/default-profile.png' },
+            { id: 2, username: 'Dev Solutions', image: '../imagenselogos/default-profile.png' },
+            { id: 3, username: 'João Silva', image: '../imagenselogos/default-profile.png' },
+            { id: 4, username: 'Maria Dev', image: '../imagenselogos/default-profile.png' },
+            { id: 5, username: 'Startup XYZ', image: '../imagenselogos/default-profile.png' }
+        ];
+
+        const mockPosts = [
+            {
+                id: 1,
+                author: 'Tech Corp',
+                authorImage: '../imagenselogos/default-profile.png',
+                time: '2h',
+                content: 'Estamos contratando desenvolvedores Full Stack! 🚀\n\nRequisitos:\n- React\n- Node.js\n- MongoDB\n\nInteressados, comentem abaixo! 👇',
+                image: null,
+                likes: 45,
+                comments: 12,
+                shares: 8
+            },
+            {
+                id: 2,
+                author: 'Maria Dev',
+                authorImage: '../imagenselogos/default-profile.png',
+                time: '4h',
+                content: 'Acabei de finalizar um projeto incrível usando React e Firebase! 💜',
+                image: '../imagenselogos/default-profile.png',
+                likes: 89,
+                comments: 15,
+                shares: 3
+            }
+        ];
+
+        const mockSuggestions = [
+            { name: 'Ana Tech', role: 'Frontend Developer', image: '../imagenselogos/default-profile.png' },
+            { name: 'Dev Corp', role: 'Empresa de Tecnologia', image: '../imagenselogos/default-profile.png' },
+            { name: 'Pedro Code', role: 'Backend Developer', image: '../imagenselogos/default-profile.png' }
+        ];
+
+        const mockJobs = [
+            { company: 'Tech Corp', role: 'Frontend Developer', location: 'São Paulo', image: '../imagenselogos/default-profile.png' },
+            { company: 'Startup XYZ', role: 'UX Designer', location: 'Remoto', image: '../imagenselogos/default-profile.png' }
+        ];
+
+        // Renderizar stories
+        function renderStories() {
+            const storiesContainer = document.querySelector('.stories-container');
+            mockStories.forEach(story => {
+                storiesContainer.innerHTML += `
+                    <div class="story-item">
+                        <div class="story-circle">
+                            <img src="${story.image}" alt="${story.username}">
+                        </div>
+                        <div class="story-username">${story.username}</div>
+                    </div>
+                `;
+            });
+        }
+
+        // Renderizar posts
+        function renderPosts() {
+            const postsSection = document.querySelector('.posts-section');
+            mockPosts.forEach(post => {
+                postsSection.innerHTML += `
+                    <article class="post-card">
+                        <div class="post-header">
+                            <img src="${post.authorImage}" alt="${post.author}">
+                            <div class="post-info">
+                                <div class="post-author">${post.author}</div>
+                                <div class="post-meta">${post.time}</div>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <p class="post-text">${post.content}</p>
+                            ${post.image ? `<img src="${post.image}" alt="Post image" class="post-image">` : ''}
+                        </div>
+                        <div class="post-actions">
+                            <div class="action-btn">
+                                <i class="far fa-heart"></i>
+                                <span>${post.likes}</span>
+                            </div>
+                            <div class="action-btn">
+                                <i class="far fa-comment"></i>
+                                <span>${post.comments}</span>
+                            </div>
+                            <div class="action-btn">
+                                <i class="far fa-share-square"></i>
+                                <span>${post.shares}</span>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            });
+        }
+
+        // Renderizar sugestões
+        function renderSuggestions() {
+            const suggestionsSection = document.querySelector('.sidebar-section');
+            mockSuggestions.forEach(suggestion => {
+                suggestionsSection.innerHTML += `
+                    <div class="suggestion-item">
+                        <img src="${suggestion.image}" alt="${suggestion.name}">
+                        <div class="suggestion-info">
+                            <div class="suggestion-name">${suggestion.name}</div>
+                            <div class="suggestion-meta">${suggestion.role}</div>
+                        </div>
+                        <button class="follow-btn">Seguir</button>
+                    </div>
+                `;
+            });
+        }
+
+        // Renderizar vagas
+        function renderJobs() {
+            const jobsSection = document.querySelectorAll('.sidebar-section')[1];
+            mockJobs.forEach(job => {
+                jobsSection.innerHTML += `
+                    <div class="suggestion-item">
+                        <img src="${job.image}" alt="${job.company}">
+                        <div class="suggestion-info">
+                            <div class="suggestion-name">${job.role}</div>
+                            <div class="suggestion-meta">${job.company} • ${job.location}</div>
+                        </div>
+                        <button class="follow-btn">Ver</button>
+                    </div>
+                `;
+            });
+        }
+
+        // Inicializar a página
+        document.addEventListener('DOMContentLoaded', () => {
+            renderStories();
+            renderPosts();
+            renderSuggestions();
+            renderJobs();
+        });
+    </script>
+</body>
+
+</html>

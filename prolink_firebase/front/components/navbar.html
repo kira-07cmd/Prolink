@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 0 30px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .nav-logo img {
+            height: 45px;
+            width: auto;
+        }
+
+        .nav-logo span {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #8E2DE2, #4A00E0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+        }
+
+        .nav-link i {
+            font-size: 1.2rem;
+        }
+
+        .nav-link:hover {
+            background: rgba(142, 45, 226, 0.1);
+            color: #8E2DE2;
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(45deg, #8E2DE2, #4A00E0);
+            color: white;
+        }
+
+        .profile-menu {
+            position: relative;
+            margin-left: 20px;
+        }
+
+        .profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #8E2DE2;
+            transition: all 0.3s ease;
+            object-fit: cover;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+            border-color: #4A00E0;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 200px;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 10px;
+            margin-top: 10px;
+            display: none;
+            animation: slideDown 0.3s ease forwards;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(142, 45, 226, 0.1);
+            color: #8E2DE2;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 8px 0;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .navbar {
+                padding: 0 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="feed.html" class="nav-logo">
+                <img src="../imagenselogos/logo 00_03_43-Photoroom.png" alt="Prolink">
+                <span>Prolink</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="feed.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    Feed
+                </a>
+                <a href="stories.html" class="nav-link">
+                    <i class="fas fa-play-circle"></i>
+                    Stories
+                </a>
+                <a href="vagas.html" class="nav-link">
+                    <i class="fas fa-briefcase"></i>
+                    Vagas
+                </a>
+                <a href="chat.html" class="nav-link">
+                    <i class="fas fa-comments"></i>
+                    Chat
+                </a>
+                <a href="recomendacoes.html" class="nav-link">
+                    <i class="fas fa-user-friends"></i>
+                    Conexões
+                </a>
+            </div>
+
+            <div class="profile-menu">
+                <img src="../imagenselogos/default-profile.png" alt="Foto de Perfil" class="profile-img"
+                    onclick="toggleDropdown()">
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="perfil.html" class="dropdown-item">
+                        <i class="fas fa-user"></i>
+                        Meu Perfil
+                    </a>
+                    <a href="configuracoes.html" class="dropdown-item">
+                        <i class="fas fa-cog"></i>
+                        Configurações
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Sair
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script type="module">
+        import { auth } from '../../back/firebase.js';
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+        // Toggle do menu dropdown
+        window.toggleDropdown = function () {
+            const dropdown = document.getElementById('profileDropdown');
+            dropdown.classList.toggle('show');
+
+            // Fechar dropdown quando clicar fora
+            document.addEventListener('click', function (event) {
+                const isClickInside = event.target.closest('.profile-menu');
+                if (!isClickInside && dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            });
+        }
+
+        // Função de logout
+        window.logout = async function () {
+            try {
+                await auth.signOut();
+                window.location.href = 'auth.html';
+            } catch (error) {
+                console.error('Erro ao fazer logout:', error);
+            }
+        }
+
+        // Atualizar foto de perfil na navbar
+        onAuthStateChanged(auth, (user) => {
+            if (user && user.photoURL) {
+                document.querySelector('.profile-img').src = user.photoURL;
+            }
+        });
+
+        // Marcar link ativo baseado na página atual
+        const currentPage = window.location.pathname.split('/').pop();
+        document.querySelectorAll('.nav-link').forEach(link => {
+            if (link.getAttribute('href') === currentPage) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+</body>
+
+</html>

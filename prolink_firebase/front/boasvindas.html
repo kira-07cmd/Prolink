@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prolink - Boas-vindas</title>
+    <link rel="shortcut icon" href="../imagenselogos/logo 00_03_43-Photoroom.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0d0d0d;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .main-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .main-title img {
+            width: 60px;
+            height: 60px;
+        }
+
+        .main-title h1 {
+            font-size: 4.5rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #8E2DE2, #4A00E0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            animation: gradientSlide 3s ease-in-out infinite;
+        }
+
+        .main-title h1::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -5px;
+            width: 3px;
+            height: 100%;
+            background: #8E2DE2;
+            animation: blink 0.7s infinite;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 60px;
+            max-width: 600px;
+            line-height: 1.6;
+            opacity: 0;
+            animation: fadeIn 0.5s ease 1s forwards;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            opacity: 0;
+            animation: fadeIn 0.5s ease 1.5s forwards;
+
+            .buttons {
+                margin-top: 40px;
+                margin-bottom: 20px;
+            }
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .btn:first-child {
+            background: linear-gradient(90deg, #8E2DE2, #4A00E0);
+            color: white;
+            box-shadow: 0 4px 15px rgba(142, 45, 226, 0.4);
+        }
+
+        .btn:last-child {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        @keyframes gradientSlide {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-title h1 {
+                font-size: 3rem;
+            }
+
+            .main-title img {
+                width: 45px;
+                height: 45px;
+            }
+
+            p {
+                font-size: 1.1rem;
+                padding: 0 20px;
+            }
+
+            .buttons {
+                flex-direction: column;
+                padding: 0 20px;
+                margin-bottom: 10vh;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Fundo com partículas -->
+    <div id="particles-js"></div>
+
+    <!-- Conteúdo Central -->
+    <div class="content">
+        <div class="main-title">
+            <img src="../imagenselogos/logo 00_03_43-Photoroom.png" alt="Logo Prolink">
+            <h1>Prolink</h1>
+        </div>
+        <p>Conectamos talentos e oportunidades de forma inteligente. Nossa plataforma une profissionais e empresas,
+            criando conexões que impulsionam carreiras e negócios.</p>
+        <div class="buttons">
+            <a href="teladelogin.html" class="btn">Entrar</a>
+            <a href="teladecadastro.html" class="btn">Criar Conta</a>
+        </div>
+    </div>
+
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#8E2DE2" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.3 },
+                "size": { "value": 3 },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#4A00E0",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": { "enable": true, "speed": 2 }
+            },
+            "interactivity": {
+                "events": {
+                    "onhover": { "enable": true, "mode": "repulse" }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações - Prolink</title>
+    <link rel="shortcut icon" href="../imagenselogos/logo 00_03_43-Photoroom.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0d0d0d;
+            color: white;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 20px;
+        }
+
+        /* Menu Lateral */
+        .settings-menu {
+            background: rgba(26, 26, 26, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .menu-item {
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #888;
+            margin-bottom: 5px;
+        }
+
+        .menu-item:hover {
+            background: rgba(142, 45, 226, 0.1);
+            color: #8E2DE2;
+        }
+
+        .menu-item.active {
+            background: rgba(142, 45, 226, 0.2);
+            color: #8E2DE2;
+        }
+
+        /* Conteúdo */
+        .settings-content {
+            background: rgba(26, 26, 26, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+        }
+
+        .settings-section {
+            display: none;
+        }
+
+        .settings-section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid transparent;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #8E2DE2;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-group select option {
+            background: #1a1a1a;
+        }
+
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .switch::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            top: 3px;
+            left: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch input:checked+.switch {
+            background: #8E2DE2;
+        }
+
+        .toggle-switch input:checked+.switch::before {
+            transform: translateX(24px);
+        }
+
+        .toggle-switch input {
+            display: none;
+        }
+
+        .settings-btn {
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .primary-btn {
+            background: #8E2DE2;
+            color: white;
+            border: none;
+        }
+
+        .primary-btn:hover {
+            background: #4A00E0;
+        }
+
+        .danger-btn {
+            background: transparent;
+            border: 1px solid #ff4444;
+            color: #ff4444;
+        }
+
+        .danger-btn:hover {
+            background: rgba(255, 68, 68, 0.1);
+        }
+
+        .notification-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .notification-info {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .notification-description {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .settings-menu {
+                position: static;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Include Navbar -->
+    <div id="navbar-placeholder"></div>
+
+    <div class="container">
+        <!-- Menu Lateral -->
+        <aside class="settings-menu">
+            <div class="menu-item active" data-section="profile">
+                <i class="fas fa-user"></i>
+                Perfil
+            </div>
+            <div class="menu-item" data-section="account">
+                <i class="fas fa-lock"></i>
+                Conta
+            </div>
+            <div class="menu-item" data-section="notifications">
+                <i class="fas fa-bell"></i>
+                Notificações
+            </div>
+            <div class="menu-item" data-section="privacy">
+                <i class="fas fa-shield-alt"></i>
+                Privacidade
+            </div>
+            <div class="menu-item" data-section="appearance">
+                <i class="fas fa-paint-brush"></i>
+                Aparência
+            </div>
+        </aside>
+
+        <!-- Conteúdo -->
+        <main class="settings-content">
+            <!-- Perfil -->
+            <section id="profile" class="settings-section active">
+                <h2 class="section-title">Configurações de Perfil</h2>
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="name">Nome completo</label>
+                        <input type="text" id="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title">Título profissional</label>
+                        <input type="text" id="title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bio">Biografia</label>
+                        <textarea id="bio" placeholder="Fale um pouco sobre você..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Localização</label>
+                        <input type="text" id="location" placeholder="Cidade, Estado">
+                    </div>
+
+                    <button type="submit" class="settings-btn primary-btn">Salvar alterações</button>
+                </form>
+            </section>
+
+            <!-- Conta -->
+            <section id="account" class="settings-section">
+                <h2 class="section-title">Configurações da Conta</h2>
+                <form id="accountForm">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="currentPassword">Senha atual</label>
+                        <input type="password" id="currentPassword">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newPassword">Nova senha</label>
+                        <input type="password" id="newPassword">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirmar nova senha</label>
+                        <input type="password" id="confirmPassword">
+                    </div>
+
+                    <button type="submit" class="settings-btn primary-btn">Atualizar senha</button>
+                    <button type="button" class="settings-btn danger-btn" id="deleteAccount">Excluir conta</button>
+                </form>
+            </section>
+
+            <!-- Notificações -->
+            <section id="notifications" class="settings-section">
+                <h2 class="section-title">Configurações de Notificações</h2>
+
+                <div class="notification-item">
+                    <div class="notification-info">
+                        <div class="notification-title">Novas conexões</div>
+                        <div class="notification-description">Receba notificações quando alguém se conectar com você
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="switch"></span>
+                    </label>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-info">
+                        <div class="notification-title">Mensagens</div>
+                        <div class="notification-description">Notificações de novas mensagens</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="switch"></span>
+                    </label>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-info">
+                        <div class="notification-title">Vagas recomendadas</div>
+                        <div class="notification-description">Receba notificações de vagas que combinam com seu perfil
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="switch"></span>
+                    </label>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-info">
+                        <div class="notification-title">Atualizações de conexões</div>
+                        <div class="notification-description">Saiba quando suas conexões postarem atualizações</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox">
+                        <span class="switch"></span>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Privacidade -->
+            <section id="privacy" class="settings-section">
+                <h2 class="section-title">Configurações de Privacidade</h2>
+
+                <div class="notification-item">
+                    <div class="notification-info">
+                        <div class="notification-title">Perfil público</div>
+                        <div class="notification-description">Permitir que seu perfil seja visível para todos</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="switch"></span>
+                    </label>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-info">
+                        <div class="notification-title">Mostrar status online</div>
+                        <div class="notification-description">Permitir que outros vejam quando você está online</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="switch"></span>
+                    </label>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-info">
+                        <div class="notification-title">Histórico de pesquisa</div>
+                        <div class="notification-description">Salvar seu histórico de pesquisa para recomendações
+                            melhores</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="switch"></span>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Aparência -->
+            <section id="appearance" class="settings-section">
+                <h2 class="section-title">Configurações de Aparência</h2>
+
+                <div class="form-group">
+                    <label for="theme">Tema</label>
+                    <select id="theme">
+                        <option value="dark">Escuro</option>
+                        <option value="light">Claro</option>
+                        <option value="system">Sistema</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="fontSize">Tamanho da fonte</label>
+                    <select id="fontSize">
+                        <option value="small">Pequeno</option>
+                        <option value="medium" selected>Médio</option>
+                        <option value="large">Grande</option>
+                    </select>
+                </div>
+
+                <button type="button" class="settings-btn primary-btn">Aplicar</button>
+            </section>
+        </main>
+    </div>
+
+    <script type="module">
+        import { auth, db } from '../back/firebase.js';
+        import {
+            updatePassword,
+            EmailAuthProvider,
+            reauthenticateWithCredential,
+            deleteUser
+        } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+        import { doc, getDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+        // Carregar a navbar
+        fetch('components/navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-placeholder').innerHTML = data;
+            });
+
+        // Navegação entre seções
+        const menuItems = document.querySelectorAll('.menu-item');
+        const sections = document.querySelectorAll('.settings-section');
+
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const targetSection = item.dataset.section;
+
+                // Update menu items
+                menuItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+
+                // Update sections
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                    if (section.id === targetSection) {
+                        section.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Carregar dados do usuário
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                const userDoc = await getDoc(doc(db, 'usuarios', user.uid));
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+
+                    // Preencher formulário de perfil
+                    document.getElementById('name').value = userData.name || '';
+                    document.getElementById('title').value = userData.title || '';
+                    document.getElementById('bio').value = userData.bio || '';
+                    document.getElementById('location').value = userData.location || '';
+                    document.getElementById('email').value = user.email || '';
+                }
+            } else {
+                window.location.href = 'auth.html';
+            }
+        });
+
+        // Atualizar perfil
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const user = auth.currentUser;
+            if (!user) return;
+
+            try {
+                await updateDoc(doc(db, 'usuarios', user.uid), {
+                    name: document.getElementById('name').value,
+                    title: document.getElementById('title').value,
+                    bio: document.getElementById('bio').value,
+                    location: document.getElementById('location').value,
+                    updatedAt: new Date()
+                });
+
+                alert('Perfil atualizado com sucesso!');
+            } catch (error) {
+                console.error('Erro ao atualizar perfil:', error);
+                alert('Erro ao atualizar perfil. Tente novamente.');
+            }
+        });
+
+        // Atualizar senha
+        document.getElementById('accountForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const user = auth.currentUser;
+            if (!user) return;
+
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (newPassword !== confirmPassword) {
+                alert('As senhas não coincidem');
+                return;
+            }
+
+            try {
+                // Reautenticar usuário
+                const credential = EmailAuthProvider.credential(user.email, currentPassword);
+                await reauthenticateWithCredential(user, credential);
+
+                // Atualizar senha
+                await updatePassword(user, newPassword);
+
+                alert('Senha atualizada com sucesso!');
+                document.getElementById('accountForm').reset();
+            } catch (error) {
+                console.error('Erro ao atualizar senha:', error);
+                alert('Erro ao atualizar senha. Verifique sua senha atual.');
+            }
+        });
+
+        // Excluir conta
+        document.getElementById('deleteAccount').addEventListener('click', async () => {
+            if (!confirm('Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.')) {
+                return;
+            }
+
+            const user = auth.currentUser;
+            if (!user) return;
+
+            try {
+                // Excluir documento do usuário
+                await deleteDoc(doc(db, 'usuarios', user.uid));
+
+                // Excluir conta de autenticação
+                await deleteUser(user);
+
+                window.location.href = 'auth.html';
+            } catch (error) {
+                console.error('Erro ao excluir conta:', error);
+                alert('Erro ao excluir conta. Tente novamente.');
+            }
+        });
+
+        // Salvar configurações de notificação
+        const toggleSwitches = document.querySelectorAll('.toggle-switch input');
+        toggleSwitches.forEach(toggle => {
+            toggle.addEventListener('change', async () => {
+                const user = auth.currentUser;
+                if (!user) return;
+
+                try {
+                    await updateDoc(doc(db, 'usuarios', user.uid), {
+                        notifications: {
+                            connections: toggleSwitches[0].checked,
+                            messages: toggleSwitches[1].checked,
+                            jobs: toggleSwitches[2].checked,
+                            updates: toggleSwitches[3].checked
+                        }
+                    });
+                } catch (error) {
+                    console.error('Erro ao salvar configurações:', error);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

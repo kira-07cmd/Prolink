@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prolink - Login</title>
+  <link rel="shortcut icon" href="../imagenselogos/logo 00_03_43-Photoroom.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: #0F0F0F;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      color: white;
+    }
+
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .logo {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 2;
+    }
+
+    .logo img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .logo span {
+      font-size: 1.4rem;
+      font-weight: bold;
+      background: linear-gradient(90deg, #8E2DE2, #4A00E0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .login-container {
+      background-color: rgba(26, 26, 26, 0.9);
+      padding: 2rem;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 0 30px rgba(142, 45, 226, 0.4);
+      animation: fadeIn 1s ease-in-out;
+      z-index: 1;
+      position: relative;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 0.5rem;
+      font-size: 2rem;
+      background: linear-gradient(90deg, #8E2DE2, #4A00E0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .welcome-text {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      color: #888;
+      line-height: 1.4;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      background-color: #2A2A2A;
+      color: white;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 1rem;
+      background: linear-gradient(90deg, #8E2DE2, #4A00E0);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .links {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .links a {
+      color: #8E2DE2;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .links a:hover {
+      text-decoration: underline;
+    }
+
+    .reenviar-btn {
+      background: transparent;
+      border: 2px solid #8E2DE2;
+      color: #8E2DE2;
+      padding: 8px 16px;
+      margin-top: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .reenviar-btn:hover {
+      background: #8E2DE2;
+      color: white;
+    }
+
+    .msg-container {
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .msg {
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Fundo com partículas -->
+  <div id="particles-js"></div>
+
+  <!-- LOGO -->
+  <div class="logo">
+    <img src="../imagenselogos/logo 00_03_43-Photoroom.png " alt="Logo Prolink">
+    <span>Prolink</span>
+  </div>
+
+  <!-- CONTEÚDO DO LOGIN -->
+  <div class="login-container">
+    <h1>Prolink</h1>
+    <p class="welcome-text">
+      Conectando profissionais,<br>construindo oportunidades.
+    </p>
+    <form id="loginForm" onsubmit="event.preventDefault(); login();">
+      <input type="email" id="email" placeholder="E-mail" required />
+      <input type="password" id="senha" placeholder="Senha" required />
+      <button type="submit" onclick="event.preventDefault(); login();">Entrar</button>
+    </form>
+    <div class="links">
+      <a href="telaesquecisenha.html">Esqueci minha senha</a><br />
+      <a href="teladecadastro.html">Criar conta</a>
+    </div>
+    <div class="msg-container">
+      <div class="msg" id="mensagem"></div>
+      <button class="reenviar-btn" id="reenviarBtn" style="display: none;" onclick="reenviarEmail()">
+        Reenviar email de verificação
+      </button>
+    </div>
+  </div>
+
+  <!-- Particles.js -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script>
+    particlesJS("particles-js", {
+      "particles": {
+        "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+        "color": { "value": "#8E2DE2" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.3 },
+        "size": { "value": 3 },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#4A00E0",
+          "opacity": 0.2,
+          "width": 1
+        },
+        "move": { "enable": true, "speed": 2 }
+      },
+      "interactivity": {
+        "events": {
+          "onhover": { "enable": true, "mode": "repulse" }
+        }
+      }
+    });
+  </script>
+
+  <!-- Firebase -->
+  <script type="module">
+    import { auth, db, loginWithEmail, getUserData, sendEmailVerification } from '../back/firebase.js';
+
+    // Tornar a função login disponível globalmente
+    window.login = async function () {
+      const email = document.getElementById("email").value.toLowerCase();
+      const senha = document.getElementById("senha").value;
+      const submitButton = document.querySelector('button[type="submit"]');
+      const msg = document.getElementById("mensagem");
+
+      console.log("Iniciando processo de login...");
+
+      if (!email || !senha) {
+        msg.style.color = "#f55";
+        msg.textContent = "⚠️ Por favor, preencha todos os campos.";
+        return;
+      }
+
+      try {
+        console.log("Tentando login com email:", email);
+        const user = await loginWithEmail(email, senha);
+        console.log("Login bem sucedido, usuário:", user.uid);
+
+        console.log("Buscando dados do usuário...");
+        const userData = await getUserData(user.uid);
+        console.log("Dados do usuário:", userData);
+
+        if (!userData) {
+          console.error("Dados do usuário não encontrados no Firestore");
+          msg.style.color = "#f55";
+          msg.textContent = "⚠️ Erro: Dados do usuário não encontrados. Por favor, faça o cadastro novamente.";
+          await auth.signOut();
+          return;
+        }
+
+        // Verificar se o usuário já escolheu o tipo de conta
+        if (!userData.tipoConta) {
+          console.log("Usuário não escolheu tipo de conta, redirecionando...");
+          window.location.href = "escolherConta.html";
+          return;
+        }
+
+        // Verificar se o perfil está completo
+        if (!userData.perfilCompleto) {
+          console.log("Perfil incompleto, redirecionando...");
+          window.location.href = "completarPerfil.html";
+          return;
+        }
+
+        // Se chegou aqui, o login foi bem sucedido e o perfil está completo
+        console.log("Login completo, redirecionando para feed...");
+        window.location.href = "feed.html";
+
+      } catch (error) {
+        console.error("Erro detalhado:", error);
+        msg.style.color = "#f55";
+
+        switch (error.code) {
+          case 'auth/invalid-email':
+            msg.textContent = "⚠️ Email inválido.";
+            break;
+          case 'auth/user-disabled':
+            msg.textContent = "⚠️ Esta conta foi desativada.";
+            break;
+          case 'auth/user-not-found':
+            msg.textContent = "⚠️ Usuário não encontrado.";
+            break;
+          case 'auth/wrong-password':
+            msg.textContent = "⚠️ Senha incorreta.";
+            break;
+          default:
+            msg.textContent = "⚠️ " + error.message;
+        }
+      }
+    };
+
+    // Função para reenviar email de verificação
+    window.reenviarEmail = async function () {
+      const msg = document.getElementById("mensagem");
+      try {
+        const currentUser = auth.currentUser;
+        if (currentUser) {
+          await sendEmailVerification(currentUser);
+          msg.style.color = "#4caf50";
+          msg.textContent = "Email de verificação reenviado! Por favor, verifique sua caixa de entrada e spam.";
+          console.log("Email de verificação reenviado para:", currentUser.email);
+        }
+      } catch (error) {
+        console.error("Erro ao reenviar email:", error);
+        msg.style.color = "#f55";
+        msg.textContent = "Erro ao reenviar email. Tente novamente em alguns minutos.";
+      }
+    };
+  </script>
+</body>
+
+</html>
